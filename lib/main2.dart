@@ -54,10 +54,16 @@ class _main2State extends State<main2> {
   }
 }
 
-class W_Numbers extends StatelessWidget {
+class W_Numbers extends StatefulWidget {
   const W_Numbers({
     super.key,
   });
+
+  @override
+  State<W_Numbers> createState() => _W_NumbersState();
+}
+
+class _W_NumbersState extends State<W_Numbers> {
 
   @override
   Widget build(BuildContext context) {
