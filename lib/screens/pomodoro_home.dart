@@ -10,22 +10,23 @@ class PompdoroHomeScreen extends StatefulWidget {
 }
 
 class _PompdoroHomeScreenState extends State<PompdoroHomeScreen> {
-  int totalSeconds = 5;
+  static const int defaultSeconds = 1500;
+  int totalSeconds = defaultSeconds;
   late Timer timer;
   bool timerFlag = false;
   int totalPomodoros = 0;
 
-  void onChangeTotalSectonds(Timer timer){
-    if(totalSeconds == 0){
+  void onChangeTotalSectonds(Timer timer) {
+    if (totalSeconds == 0) {
       setState(() {
         totalPomodoros = totalPomodoros + 1;
         timerFlag = false;
-        totalSeconds = 5;
+        totalSeconds = defaultSeconds;
       });
       timer.cancel();
-    }else{
+    } else {
       setState(() {
-        totalSeconds = totalSeconds -1;
+        totalSeconds = totalSeconds - 1;
       });
     }
   }
@@ -40,11 +41,15 @@ class _PompdoroHomeScreenState extends State<PompdoroHomeScreen> {
     });
   }
 
-  void onStopClick(){
+  void onStopClick() {
     timer.cancel();
     setState(() {
       timerFlag = !timerFlag;
     });
+  }
+
+  String returnToDate(int seconds){
+      return Duration(seconds: seconds).toString().split(".")[0].substring(2,7);
   }
 
   @override
@@ -58,7 +63,7 @@ class _PompdoroHomeScreenState extends State<PompdoroHomeScreen> {
             child: Container(
               alignment: Alignment.bottomCenter,
               child: Text(
-                '$totalSeconds',
+                returnToDate(totalSeconds),
                 style: TextStyle(
                     color: Theme.of(context).cardColor,
                     fontSize: 89,
@@ -70,10 +75,12 @@ class _PompdoroHomeScreenState extends State<PompdoroHomeScreen> {
             flex: 3,
             child: Center(
               child: IconButton(
-                onPressed: timerFlag? onStopClick: onPlayClick,
+                onPressed: timerFlag ? onStopClick : onPlayClick,
                 iconSize: 120,
                 color: Theme.of(context).cardColor,
-                icon: Icon(timerFlag ? Icons.pause_circle_outline : Icons.play_circle_outline),
+                icon: Icon(timerFlag
+                    ? Icons.pause_circle_outline
+                    : Icons.play_circle_outline),
               ),
             ),
           ),
@@ -84,6 +91,10 @@ class _PompdoroHomeScreenState extends State<PompdoroHomeScreen> {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
                       color: Theme.of(context).cardColor,
                     ),
                     child: Column(
