@@ -48,8 +48,14 @@ class _PompdoroHomeScreenState extends State<PompdoroHomeScreen> {
     });
   }
 
-  String returnToDate(int seconds){
-      return Duration(seconds: seconds).toString().split(".")[0].substring(2,7);
+  void restartSeconds(){
+    setState(() {
+      totalSeconds = defaultSeconds;
+    });
+  }
+
+  String returnToDate(int seconds) {
+    return Duration(seconds: seconds).toString().split(".")[0].substring(2, 7);
   }
 
   @override
@@ -73,15 +79,31 @@ class _PompdoroHomeScreenState extends State<PompdoroHomeScreen> {
           ),
           Flexible(
             flex: 3,
-            child: Center(
-              child: IconButton(
-                onPressed: timerFlag ? onStopClick : onPlayClick,
-                iconSize: 120,
-                color: Theme.of(context).cardColor,
-                icon: Icon(timerFlag
-                    ? Icons.pause_circle_outline
-                    : Icons.play_circle_outline),
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: IconButton(
+                    onPressed: timerFlag ? onStopClick : onPlayClick,
+                    iconSize: 120,
+                    color: Theme.of(context).cardColor,
+                    icon: Icon(timerFlag
+                        ? Icons.pause_circle_outline
+                        : Icons.play_circle_outline),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: IconButton(
+                    onPressed: restartSeconds,
+                    iconSize: 30,
+                    color: Theme.of(context).cardColor,
+                    icon: Icon(Icons.restart_alt_outlined),
+                  ),
+                ),
+              ],
             ),
           ),
           Flexible(
