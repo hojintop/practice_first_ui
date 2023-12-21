@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:practice_toonflix/screens/pomodoro_home.dart';
 
 void main() {
-  runApp(PomodoroApp());
+  runApp(const PomodoroApp());
 }
 
 class PomodoroApp extends StatelessWidget {
