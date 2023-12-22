@@ -4,7 +4,6 @@ import 'package:practice_toonflix/screens/toon_home.dart';
 import 'package:practice_toonflix/services/api_service.dart';
 
 void main(){
-  ApiService().getTodaysToons();
   runApp(const ExampleToonApp());
 }
 

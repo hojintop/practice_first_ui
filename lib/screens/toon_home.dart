@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:practice_toonflix/services/api_service.dart';
+
+import '../models/toons_model.dart';
 
 class ToonHome extends StatelessWidget {
-  const ToonHome({super.key});
+  ToonHome({super.key});
+
+  final Future<List<WebtoonModel>> webtoons = ApiService.getTodaysToons();
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +23,25 @@ class ToonHome extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
+      ),
+      body: FutureBuilder(
+        future: webtoons,
+        builder: (context, futureData) {
+          if(futureData.hasData){
+            return ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: futureData.data!.length,
+              itemBuilder: (context,index){
+                var webtoon = futureData.data![index];
+                return Text(webtoon.title);
+              },
+              separatorBuilder: (context, index) => SizedBox(width: 20,),
+            );
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
     );
   }
