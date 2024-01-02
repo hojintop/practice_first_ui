@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practice_toonflix/services/api_service.dart';
+import 'package:practice_toonflix/widgets/webToon_widgets.dart';
 
 import '../models/toons_model.dart';
 
@@ -11,6 +12,7 @@ class ToonHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 5,
         backgroundColor: Colors.white,
@@ -27,21 +29,37 @@ class ToonHome extends StatelessWidget {
       body: FutureBuilder(
         future: webtoons,
         builder: (context, futureData) {
-          if(futureData.hasData){
-            return ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: futureData.data!.length,
-              itemBuilder: (context,index){
-                var webtoon = futureData.data![index];
-                return Text(webtoon.title);
-              },
-              separatorBuilder: (context, index) => SizedBox(width: 20,),
+          if (futureData.hasData) {
+            return Column(
+              children: [
+                SizedBox(
+                  height: 50,
+                ),
+                Expanded(
+                  child: makeList(futureData),
+                )
+              ],
             );
           }
           return Center(
             child: CircularProgressIndicator(),
           );
         },
+      ),
+    );
+  }
+
+  ListView makeList(AsyncSnapshot<List<WebtoonModel>> futureData) {
+    return ListView.separated(
+      scrollDirection: Axis.horizontal,
+      itemCount: futureData.data!.length,
+      padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
+      itemBuilder: (context, index) {
+        var webtoon = futureData.data![index];
+        return WebToonList(title: webtoon.title, id: webtoon.id, thumb: webtoon.thumb);
+      },
+      separatorBuilder: (context, index) => SizedBox(
+        width: 40,
       ),
     );
   }
