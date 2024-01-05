@@ -53,10 +53,11 @@ class ToonHome extends StatelessWidget {
     return ListView.separated(
       scrollDirection: Axis.horizontal,
       itemCount: futureData.data!.length,
-      padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       itemBuilder: (context, index) {
         var webtoon = futureData.data![index];
-        return WebToonList(title: webtoon.title, id: webtoon.id, thumb: webtoon.thumb);
+        return WebToonList(
+            title: webtoon.title, id: webtoon.id, thumb: webtoon.thumb);
       },
       separatorBuilder: (context, index) => SizedBox(
         width: 40,
